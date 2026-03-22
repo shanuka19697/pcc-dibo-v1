@@ -13,6 +13,7 @@ interface ConfirmModalProps {
   cancelText?: string;
   type?: "danger" | "warning" | "success" | "info";
   isLoading?: boolean;
+  showCancel?: boolean;
 }
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -25,6 +26,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   cancelText = "Cancel",
   type = "warning",
   isLoading = false,
+  showCancel = true,
 }) => {
   if (!isOpen) return null;
 
@@ -89,13 +91,15 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
           </p>
           
           <div className="flex items-center gap-3">
-            <button
-              onClick={onClose}
-              disabled={isLoading}
-              className="flex-1 px-6 py-3 rounded-2xl font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all duration-300 disabled:opacity-50"
-            >
-              {cancelText}
-            </button>
+            {showCancel && (
+              <button
+                onClick={onClose}
+                disabled={isLoading}
+                className="flex-1 px-6 py-3 rounded-2xl font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-all duration-300 disabled:opacity-50"
+              >
+                {cancelText}
+              </button>
+            )}
             <button
               onClick={onConfirm}
               disabled={isLoading}

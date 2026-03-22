@@ -1,8 +1,8 @@
 "use client";
 
-import { ImageKitProvider, IKUpload } from "imagekitio-next";
+import { ImageKitProvider, upload } from "@imagekit/next";
 import { UploadCloud, Loader2, X, CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT || "placeholder";
@@ -31,41 +31,66 @@ export default function ImageUpload({
     const { t } = useLanguage();
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState("");
-
-    const onError = (err: any) => {
-        setUploading(false);
-        setError(t("upload_error"));
-    };
-
-    const onSuccess = (res: any) => {
-        setUploading(false);
-        onChange(res.url); // Use the ImageKit URL
-    };
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const onUploadStart = () => {
         setUploading(true);
         setError("");
     };
 
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        onUploadStart();
+
+        try {
+            const authParams = await authenticator() as { 
+                signature: string; 
+                token: string; 
+                expire: number; 
+            };
+
+            const result = await upload({
+                file,
+                fileName: "student_photo.webp",
+                publicKey: publicKey as string,
+                signature: authParams.signature,
+                token: authParams.token,
+                expire: authParams.expire,
+                folder: "/student_photos",
+                tags: ["student"]
+            });
+            
+            setUploading(false);
+            if (result.url) {
+                onChange(result.url);
+            }
+        } catch (err: any) {
+            setUploading(false);
+            setError(t("upload_error"));
+            console.error("Upload error:", err);
+        }
+    };
+
+    const triggerUpload = () => {
+        fileInputRef.current?.click();
+    };
+
     return (
-        <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}>
+        <ImageKitProvider urlEndpoint={urlEndpoint}>
             <div className="relative w-full pb-2">
                 <div 
-                    className={`relative group flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl transition-all duration-300 overflow-hidden ${value ? 'border-amber-400 bg-amber-50/20' : 'border-slate-300 bg-white hover:border-amber-400 hover:bg-slate-50'} ${uploading ? 'pointer-events-none opacity-80' : ''}`}
+                    onClick={!uploading && !value ? triggerUpload : undefined}
+                    className={`relative group flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl transition-all duration-300 overflow-hidden ${value ? 'border-amber-400 bg-amber-50/20' : 'border-slate-300 bg-white hover:border-amber-400 hover:bg-slate-50 cursor-pointer'} ${uploading ? 'pointer-events-none opacity-80' : ''}`}
                 >
-                    {/* The Invisible ImageKit File Input spanning the whole box */}
-                    {!value && !uploading && (
-                        <IKUpload 
-                            fileName="student_photo.webp" 
-                            folder="/student_photos"
-                            tags={["student"]}
-                            onError={onError}
-                            onSuccess={onSuccess}
-                            onUploadStart={onUploadStart}
-                            accept="image/*"
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-50"
-                        />
-                    )}
+                    <input 
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleUpload}
+                        accept="image/*"
+                        className="hidden"
+                    />
 
                     {uploading ? (
                         <div className="flex flex-col items-center justify-center text-amber-500">
@@ -76,18 +101,11 @@ export default function ImageUpload({
                         <div className="relative w-full h-full flex items-center justify-center group">
                             <img src={value} alt="Preview" className="h-full object-contain drop-shadow-md" />
                             
-                            <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm z-30">
+                            <div 
+                                onClick={triggerUpload}
+                                className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm z-30 cursor-pointer"
+                            >
                                <span className="text-white font-medium flex items-center gap-2"><UploadCloud size={20}/> {t("upload_reupload")}</span>
-                               <IKUpload 
-                                    fileName="student_photo.webp" 
-                                    folder="/student_photos"
-                                    tags={["student"]}
-                                    onError={onError}
-                                    onSuccess={onSuccess}
-                                    onUploadStart={onUploadStart}
-                                    accept="image/*"
-                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-40"
-                                />
                             </div>
 
                             <button 

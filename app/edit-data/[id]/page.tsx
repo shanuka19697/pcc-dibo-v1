@@ -289,7 +289,7 @@ export default function EditDataPage({ params }: { params: Promise<{ id: string 
         title={t("modal_cancel_title")}
         message={t("modal_cancel_msg")}
         confirmText={t("modal_cancel_btn")}
-        cancelText="Keep Editing"
+        cancelText={t("btn_keep_editing")}
         type="warning"
       />
 
@@ -307,6 +307,7 @@ export default function EditDataPage({ params }: { params: Promise<{ id: string 
         message={t("modal_success_update_msg")}
         confirmText={t("btn_ack")}
         type="success"
+        showCancel={false}
       />
     </div>
   );

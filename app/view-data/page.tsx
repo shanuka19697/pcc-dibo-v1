@@ -293,6 +293,7 @@ export default function ViewDataPage() {
         message={t("modal_success_db_msg")}
         confirmText={t("btn_ack")}
         type="success"
+        showCancel={false}
       />
     </div>
   );

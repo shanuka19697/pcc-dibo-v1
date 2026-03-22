@@ -224,7 +224,7 @@ export default function AddDataPage() {
         title={t("modal_cancel_title")}
         message={t("modal_cancel_msg")}
         confirmText={t("modal_cancel_btn")}
-        cancelText="Continue Writing"
+        cancelText={t("btn_continue")}
         type="warning"
       />
 
@@ -238,10 +238,11 @@ export default function AddDataPage() {
           setIsSuccessModalOpen(false);
           router.push("/view-data");
         }}
-        title="Registration Complete!"
-        message="The new student has been successfully enrolled and added to the central database."
+        title={t("modal_success_reg_title")}
+        message={t("modal_success_reg_msg")}
         confirmText={t("btn_ack")}
         type="success"
+        showCancel={false}
       />
     </div>
   );

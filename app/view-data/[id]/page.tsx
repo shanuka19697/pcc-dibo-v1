@@ -35,7 +35,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-slate-400">
          <Loader2 className="animate-spin mb-4 text-brand-500" size={40} />
-         <p className="font-medium animate-pulse">{language === "si" ? "සම්පූර්ණ ශිෂ්‍ය පැතිකඩ ලබා ගනිමින්..." : "Retrieving comprehensive student portfolio..."}</p>
+         <p className="font-medium animate-pulse">{t("portfolio_loading")}</p>
       </div>
     );
   }
@@ -44,7 +44,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
     return (
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold text-slate-800">{t("no_records")}</h2>
-        <Link href="/view-data" className="text-brand-600 hover:underline mt-4 inline-block">{language === "si" ? "දත්ත ගබඩාව වෙත ආපසු" : "Return to Database"}</Link>
+        <Link href="/view-data" className="text-brand-600 hover:underline mt-4 inline-block">{t("btn_back_db")}</Link>
       </div>
     );
   }
@@ -54,10 +54,10 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
       
       <div className="flex items-center justify-between mb-8">
         <Link href="/view-data" className="text-slate-500 hover:text-brand-600 font-medium text-sm flex items-center gap-1 transition-colors bg-white px-4 py-2 rounded-full shadow-sm hover:shadow border border-slate-100">
-          <ArrowLeft size={16} /> {language === "si" ? "දත්ත ගබඩාව වෙත ආපසු" : "Back to Database"}
+          <ArrowLeft size={16} /> {t("btn_back_db")}
         </Link>
         <Link href={`/edit-data/${id}`} className="btn-primary py-2 px-6 shadow-brand-500/20 text-sm">
-          <Edit3 size={16} /> {language === "si" ? "සංස්කරණය" : "Edit Record"}
+          <Edit3 size={16} /> {t("btn_edit_record")}
         </Link>
       </div>
 
@@ -107,7 +107,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
             <section>
               <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 text-brand-700">
                 <MapPin size={20}/> 
-                {language === "si" ? "සන්දර්භය සහ අරමුණු" : "Context & Objectives"}
+                {t("section_context")}
               </h3>
               <p className="text-slate-700 text-lg leading-relaxed bg-brand-50/50 p-6 rounded-2xl border border-brand-100/50">
                 {data.Reason}
@@ -117,7 +117,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <section>
                 <h3 className="text-base font-bold text-slate-900 mb-4 text-blue-700 uppercase tracking-wide text-xs">
-                   {language === "si" ? "පරිපාලන පැවරුම්" : "Administrative Assignments"}
+                   {t("section_admin")}
                 </h3>
                  <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-slate-50">
@@ -132,7 +132,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
               </section>
               <section>
                 <h3 className="text-base font-bold text-slate-900 mb-4 text-amber-700 uppercase tracking-wide text-xs">
-                   {language === "si" ? "කාලරේඛා වලංගුකරණය" : "Timeline Validation"}
+                   {t("section_timeline")}
                 </h3>
                  <div className="space-y-4">
                   <div className="flex flex-col py-2 border-b border-slate-50">
@@ -148,7 +148,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
             <section>
               <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2 text-emerald-700">
                  <CheckCircle2 size={20}/> 
-                 {language === "si" ? "සම්පූර්ණ ගිවිසුම් විස්තර" : "Comprehensive Agreement Details"}
+                 {t("section_agreement")}
               </h3>
               <div className="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-100">
                 <p className="text-slate-700 leading-relaxed font-serif text-base italic">

@@ -67,8 +67,8 @@ const Navbar = () => {
                 <Database size={24} />
             </div>
             <div className="hidden xs:block">
-              <span className="text-lg font-black tracking-tighter text-slate-900 leading-none block">STUDENT</span>
-              <span className="text-[10px] font-bold text-brand-600 uppercase tracking-widest leading-none">Management</span>
+              <span className="text-lg font-black tracking-tighter text-slate-900 leading-none block">{t("brand_student")}</span>
+              <span className="text-[10px] font-bold text-brand-600 uppercase tracking-widest leading-none">{t("brand_management")}</span>
             </div>
           </Link>
 
@@ -162,7 +162,7 @@ const Navbar = () => {
           
           {/* Mobile Nav Links */}
           <div className="flex flex-col gap-1 border-b border-slate-100 pb-4 mb-4">
-             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-4 mb-2">Navigation</span>
+             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-4 mb-2">{t("label_navigation")}</span>
              {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (

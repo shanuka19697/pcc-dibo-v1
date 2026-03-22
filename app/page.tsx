@@ -6,7 +6,7 @@ import { Users, FilePlus, Search, TrendingUp, GraduationCap, MapPin, Calendar, A
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
@@ -79,7 +79,7 @@ export default function Home() {
           </p>
           <div className="flex gap-4 p-6 bg-white border border-slate-100 rounded-2xl shadow-sm italic text-slate-500">
              <TrendingUp className="text-brand-500 shrink-0" size={24} />
-             <span>Recognized for pioneering secondary education and developing elite athletes for the nation.</span>
+             <span>{t("heritage_badge")}</span>
           </div>
         </div>
 
@@ -96,12 +96,12 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-2 gap-4">
              <div className="p-4 bg-slate-50 rounded-xl">
-               <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">District</span>
-               <span className="font-bold text-slate-800 uppercase tracking-wider">{t("si") === t("si") ? "නුවරඑළිය" : "Nuwara Eliya"}</span>
+               <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t("label_district")}</span>
+               <span className="font-bold text-slate-800 uppercase tracking-wider">{t("district_name")}</span>
              </div>
              <div className="p-4 bg-slate-50 rounded-xl">
-               <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Zone</span>
-               <span className="font-bold text-slate-800 uppercase tracking-wider">{t("si") === t("si") ? "හඟුරන්කෙත" : "Hanguranketha"}</span>
+               <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{t("label_zone")}</span>
+               <span className="font-bold text-slate-800 uppercase tracking-wider">{t("zone_name")}</span>
              </div>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-slate-900 mb-2">{t("reg_title")}</h3>
                 <p className="text-sm text-slate-500 mb-4">{t("reg_desc")}</p>
                 <span className="text-brand-600 text-sm font-bold flex items-center gap-2">
-                  Launch Enrollment <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  {t("launch_enrollment")} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-slate-900 mb-2">{t("db_title")}</h3>
                 <p className="text-sm text-slate-500 mb-4">{t("db_desc")}</p>
                 <span className="text-slate-800 text-sm font-bold flex items-center gap-2">
-                  Open Records Search <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  {t("open_search")} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
             </div>
