@@ -1,6 +1,6 @@
 "use client";
 
-import { IKImage, IKUpload, ImageKitProvider } from "@imagekit/next";
+import { ImageKitProvider, IKUpload } from "imagekitio-next";
 import { UploadCloud, Loader2, X, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
