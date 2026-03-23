@@ -122,11 +122,7 @@ export default function StudentDetailsPage({ params }: { params: Promise<{ id: s
                  <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-slate-50">
                     <span className="text-slate-500 font-medium">{t("role_teacher")}</span>
-                    <span className="font-bold text-slate-900 bg-slate-100 px-3 py-1 rounded-md">{data.TeacherID}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 border-b border-slate-50">
-                    <span className="text-slate-500 font-medium">Observer ID</span>
-                    <span className="font-bold text-slate-900 bg-slate-100 px-3 py-1 rounded-md">{data.ObserverTeacherID}</span>
+                    <span className="font-bold text-slate-900 bg-slate-100 px-3 py-1 rounded-md">{data.TeacherID} ({data.TeacherTitle === 'Sir' ? t("teacher_sir") : t("teacher_madam")})</span>
                   </div>
                 </div>
               </section>

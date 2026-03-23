@@ -44,9 +44,11 @@ const sDataSchema = new Schema(
       type: Date,
       required: true,
     },
-    ObserverTeacherID: {
+    TeacherTitle: {
       type: String,
+      enum: ['Sir', 'Madam'],
       required: true,
+      default: 'Sir'
     },
     Isactive: {
       type: Boolean,

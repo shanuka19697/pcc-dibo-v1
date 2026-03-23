@@ -94,39 +94,58 @@ export default function ViewDataPage() {
         <p className="text-slate-500 italic">{t("db_subheader")}</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto mb-8">
-        <div className="relative group flex-grow lg:min-w-[320px]">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-500 transition-colors" size={20} />
-          <input
-            type="text"
-            placeholder={t("search_placeholder")}
-            className="input-field pl-12 pr-4 bg-white shadow-sm"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+      {userRole !== 'teacher' && (
+        <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto mb-8">
+          <div className="relative group flex-grow lg:min-w-[320px]">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-brand-500 transition-colors" size={20} />
+            <input
+              type="text"
+              placeholder={t("search_placeholder")}
+              className="input-field pl-12 pr-4 bg-white shadow-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <div className="glass-panel p-1.5 flex gap-1 shadow-sm bg-white/60 items-center justify-center">
+            <button 
+              onClick={() => setViewMode('table')}
+              className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${viewMode === 'table' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-500 hover:bg-slate-100'}`}
+              title={t("view_table")}
+            >
+              <List size={18} />
+            </button>
+            <button 
+              onClick={() => setViewMode('grid')}
+              className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${viewMode === 'grid' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-500 hover:bg-slate-100'}`}
+              title={t("view_grid")}
+            >
+              <LayoutGrid size={18} />
+            </button>
+          </div>
         </div>
-        <div className="glass-panel p-1.5 flex gap-1 shadow-sm bg-white/60 items-center justify-center">
-          <button 
-            onClick={() => setViewMode('table')}
-            className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${viewMode === 'table' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-500 hover:bg-slate-100'}`}
-            title={t("view_table")}
-          >
-            <List size={18} />
-          </button>
-          <button 
-            onClick={() => setViewMode('grid')}
-            className={`p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center ${viewMode === 'grid' ? 'bg-slate-800 text-white shadow-md' : 'text-slate-500 hover:bg-slate-100'}`}
-            title={t("view_grid")}
-          >
-            <LayoutGrid size={18} />
-          </button>
-        </div>
-      </div>
+      )}
 
       {loading ? (
         <div className="glass-panel h-64 flex flex-col items-center justify-center text-slate-400">
           <Loader2 className="animate-spin mb-4 text-brand-500" size={40} />
           <p className="font-medium animate-pulse">Initializing Database Connection...</p>
+        </div>
+      ) : userRole === 'teacher' ? (
+        <div className="glass-panel p-16 text-center flex flex-col items-center justify-center gap-8 max-w-2xl mx-auto border-dashed border-2 border-brand-200 bg-brand-50/20 shadow-xl shadow-brand-50/50 animate-in zoom-in-95 duration-500">
+          <div className="w-24 h-24 bg-brand-100 rounded-2xl flex items-center justify-center rotate-2 shadow-lg group-hover:rotate-0 transition-transform duration-300">
+             <User size={48} className="text-brand-600" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">{language === "si" ? "සිසුන්ගේ දත්ත ඇතුළත් කරන්න" : "Add Student Data"}</h3>
+            <p className="text-slate-500 max-w-md mx-auto">
+              {language === "si" 
+                ? "ගුරු ගිණුම් සඳහා සිසුන්ගේ දත්ත ඇතුළත් කිරීමට පමණක් අවසර ඇත. අලුත් සිසුවෙකු ලියාපදිංචි කිරීමට පහත බොත්තම භාවිතා කරන්න." 
+                : "Teacher accounts are authorized for data entry only. Use the button below to register a new student record."}
+            </p>
+          </div>
+          <Link href="/add-data" className="btn-primary py-4 px-10 text-lg shadow-xl shadow-brand-500/20 hover:scale-105 transition-all">
+            {t("nav_add_student")}
+          </Link>
         </div>
       ) : filteredData.length > 0 ? (
         
@@ -160,7 +179,7 @@ export default function ViewDataPage() {
                       <td className="px-6 py-4">
                         <div className="flex flex-col gap-1">
                           <span className="font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-md w-fit">{t("col_academic")} {item.Class}</span>
-                          <span className="text-slate-400 text-xs ml-1">Assigned: {item.TeacherID}</span>
+                          <span className="text-slate-400 text-xs ml-1">Assigned: {item.TeacherID} ({item.TeacherTitle === 'Sir' ? t("teacher_sir") : t("teacher_madam")})</span>
                         </div>
                       </td>
                       <td className="px-6 py-4">
@@ -229,7 +248,7 @@ export default function ViewDataPage() {
                     <div className="w-px h-8 bg-slate-100"></div>
                      <div className="text-center">
                        <p className="text-[10px] uppercase text-slate-400 font-bold tracking-wider mb-1">{t("role_teacher")}</p>
-                       <p className="font-semibold text-slate-800">{item.TeacherID}</p>
+                       <p className="font-semibold text-slate-800">{item.TeacherID} <span className="text-[10px] text-slate-400">({item.TeacherTitle === 'Sir' ? t("teacher_sir") : t("teacher_madam")})</span></p>
                     </div>
                   </div>
 

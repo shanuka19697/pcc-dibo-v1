@@ -29,7 +29,7 @@ export default function EditDataPage({ params }: { params: Promise<{ id: string 
     sIndexNum: "",
     Reason: "",
     TeacherID: "",
-    ObserverTeacherID: "",
+    TeacherTitle: "Sir",
     Agreement: "",
     AgreementEndDate: "",
     Isactive: false,
@@ -245,8 +245,30 @@ export default function EditDataPage({ params }: { params: Promise<{ id: string 
                 <input type="text" name="TeacherID" value={formData.TeacherID} onChange={handleChange} required className="input-field uppercase" />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-slate-700">Observer {t("role_teacher")} ID *</label>
-                <input type="text" name="ObserverTeacherID" value={formData.ObserverTeacherID} onChange={handleChange} required className="input-field uppercase" />
+                <label className="text-sm font-semibold text-slate-700">{t("label_teacher_title")} *</label>
+                <div className="flex gap-4">
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, TeacherTitle: 'Sir' }));
+                      setIsDirty(true);
+                    }}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs uppercase tracking-wider ${formData.TeacherTitle === 'Sir' ? 'bg-amber-500 border-amber-500 text-white shadow-lg' : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'}`}
+                  >
+                    {t("teacher_sir")}
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({ ...prev, TeacherTitle: 'Madam' }));
+                      setIsDirty(true);
+                    }}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border-2 transition-all font-bold text-xs uppercase tracking-wider ${formData.TeacherTitle === 'Madam' ? 'bg-amber-500 border-amber-500 text-white shadow-lg' : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'}`}
+                  >
+                    {t("teacher_madam")}
+                  </button>
+                </div>
+                <input type="hidden" name="TeacherTitle" value={formData.TeacherTitle} />
               </div>
               <div className="space-y-2 md:col-span-2">
                 <label className="text-sm font-semibold text-slate-700">Comprehensive Agreement Details *</label>
