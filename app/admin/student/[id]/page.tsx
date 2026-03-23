@@ -158,7 +158,6 @@ export default function AdminStudentView({ params }: { params: Promise<{ id: str
               </div>
             </div>
 
-            {/* Device / Submission Info */}
             <div className="bg-slate-900/60 border border-white/5 rounded-2xl overflow-hidden">
               <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5">
                 <div className="w-8 h-8 bg-violet-500/10 rounded-lg flex items-center justify-center">
@@ -169,6 +168,7 @@ export default function AdminStudentView({ params }: { params: Promise<{ id: str
               <div className="p-5 space-y-3">
                 {dev?.ip ? (
                   <>
+                    {/* IP */}
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 bg-violet-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Wifi size={14} className="text-violet-400" />
@@ -178,6 +178,37 @@ export default function AdminStudentView({ params }: { params: Promise<{ id: str
                         <p className="text-violet-300 font-mono text-sm break-all">{dev.ip}</p>
                       </div>
                     </div>
+                    {/* ISP */}
+                    {dev.isp && dev.isp !== 'Unknown' && (
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 bg-indigo-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <Globe size={14} className="text-indigo-400" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">ISP / Provider</p>
+                          <p className="text-white text-sm font-semibold">{dev.isp}</p>
+                          {dev.org && dev.org !== dev.isp && dev.org !== 'Unknown' && (
+                            <p className="text-slate-500 text-xs mt-0.5">{dev.org}</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {/* Location */}
+                    {dev.country && dev.country !== 'Unknown' && (
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <MapPin size={14} className="text-emerald-400" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Location</p>
+                          <p className="text-white text-sm font-semibold">{[dev.city, dev.region, dev.country].filter(v => v && v !== 'Unknown').join(', ')}</p>
+                          {dev.timezone && dev.timezone !== 'Unknown' && (
+                            <p className="text-slate-500 text-xs mt-0.5">🕐 {dev.timezone}</p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {/* OS */}
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Cpu size={14} className="text-blue-400" />
@@ -187,27 +218,33 @@ export default function AdminStudentView({ params }: { params: Promise<{ id: str
                         <p className="text-white text-sm font-semibold">{dev.os}</p>
                       </div>
                     </div>
+                    {/* Browser */}
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Globe size={14} className="text-emerald-400" />
+                      <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Globe size={14} className="text-amber-400" />
                       </div>
                       <div>
                         <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Browser</p>
                         <p className="text-white text-sm font-semibold">{dev.browser}</p>
                       </div>
                     </div>
+                    {/* Device */}
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <DeviceIcon size={14} className="text-amber-400" />
+                      <div className="w-8 h-8 bg-rose-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <DeviceIcon size={14} className="text-rose-400" />
                       </div>
                       <div>
-                        <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Device Type</p>
-                        <p className="text-white text-sm font-semibold">{dev.device}</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Device</p>
+                        <p className="text-white text-sm font-semibold">{dev.deviceModel ?? dev.device}</p>
+                        {dev.deviceModel && dev.device && dev.deviceModel !== dev.device && (
+                          <p className="text-slate-500 text-xs mt-0.5">{dev.device}</p>
+                        )}
                       </div>
                     </div>
+                    {/* User-Agent */}
                     {dev.userAgent && (
                       <div className="pt-3 border-t border-white/5">
-                        <p className="text-xs text-slate-500 uppercase tracking-wider font-bold mb-2">User Agent</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wider font-bold mb-2">Raw User-Agent</p>
                         <p className="text-slate-400 font-mono text-[11px] leading-relaxed break-all bg-slate-800/50 p-3 rounded-lg">{dev.userAgent}</p>
                       </div>
                     )}
