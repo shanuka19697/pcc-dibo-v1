@@ -36,6 +36,12 @@ const sDataSchema = new Schema(
       type: String,
       required: true,
     },
+    TeacherTitle: {
+      type: String,
+      enum: ['Sir', 'Madam'],
+      required: true,
+      default: 'Sir'
+    },
     Agreement: {
       type: String,
       required: true,
@@ -44,15 +50,16 @@ const sDataSchema = new Schema(
       type: Date,
       required: true,
     },
-    TeacherTitle: {
-      type: String,
-      enum: ['Sir', 'Madam'],
-      required: true,
-      default: 'Sir'
-    },
     Isactive: {
       type: Boolean,
       required: true,
+    },
+    submittedDevice: {
+      ip: { type: String, default: 'Unknown' },
+      os: { type: String, default: 'Unknown' },
+      browser: { type: String, default: 'Unknown' },
+      device: { type: String, default: 'Unknown' },
+      userAgent: { type: String, default: '' },
     },
   },
   {
@@ -61,8 +68,11 @@ const sDataSchema = new Schema(
   }
 );
 
-// In Next.js, model caching can prevent schema updates from applying during hot reloads.
-// We check for the model in models, and if it's not there or if we want to ensure it's fresh, we register it.
-const StData = models.StData || model('StData', sDataSchema);
+// Always delete the cached model to ensure the latest schema is used.
+// This prevents stale model caches causing validation errors in Next.js.
+if (models.StData) {
+  delete (mongoose.connection.models as any)['StData'];
+}
+const StData = model('StData', sDataSchema);
 
 export default StData;
