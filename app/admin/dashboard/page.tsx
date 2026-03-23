@@ -189,9 +189,17 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-6 py-4">
                           {s.submittedDevice?.ip ? (
-                            <div className="flex items-center gap-1.5 text-slate-500 text-xs">
-                              <Monitor size={12} className="text-violet-400 flex-shrink-0" />
-                              <span className="text-violet-400 font-mono">{s.submittedDevice.ip}</span>
+                            <div className="flex flex-col gap-0.5">
+                              <div className="flex items-center gap-1.5 text-xs">
+                                <Monitor size={12} className="text-violet-400 flex-shrink-0" />
+                                <span className="text-violet-400 font-mono">{s.submittedDevice.ip}</span>
+                              </div>
+                              {s.submittedDevice.deviceModel && s.submittedDevice.deviceModel !== 'Unknown' && (
+                                <span className="text-slate-500 text-xs pl-0.5">{s.submittedDevice.deviceModel}</span>
+                              )}
+                              {s.submittedDevice.os && s.submittedDevice.os !== 'Unknown' && (
+                                <span className="text-slate-600 text-[10px] pl-0.5">{s.submittedDevice.os}</span>
+                              )}
                             </div>
                           ) : (
                             <span className="text-slate-600 text-xs">—</span>
