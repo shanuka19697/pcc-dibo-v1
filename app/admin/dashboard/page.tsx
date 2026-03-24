@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Shield, Search, Eye, Pencil, Trash2, Loader2, LogOut,
-  Users, UserCheck, UserX, Monitor, RefreshCw, X
+  Users, UserCheck, UserX, Monitor, RefreshCw, Linkedin, Send
 } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
       <div className="fixed inset-y-0 left-0 w-64 bg-slate-900 border-r border-white/5 flex flex-col z-30">
         <div className="p-6 border-b border-white/5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20">
+            <div className="w-10 h-10 bg-linear-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20">
               <Shield size={20} className="text-white" />
             </div>
             <div>
@@ -108,6 +108,32 @@ export default function AdminDashboard() {
         </header>
 
         <main className="flex-1 p-8 space-y-6">
+          {/* Developer details */}
+          <div className="bg-slate-900/60 border border-white/5 rounded-2xl p-5">
+            <p className="text-xs uppercase tracking-wider text-slate-500 font-bold">Developer Details</p>
+            <h2 className="text-lg font-bold text-white mt-2">Shanuka Lakshan</h2>
+            <p className="text-sm text-violet-300 mt-1">DD Developer</p>
+
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a
+                href="https://www.linkedin.com/in/shanuka-lakshan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition-all text-sm font-medium"
+              >
+                <Linkedin size={15} /> LinkedIn Profile
+              </a>
+              <a
+                href="https://t.me/shanuka_lakshan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 transition-all text-sm font-medium"
+              >
+                <Send size={15} /> Telegram Profile
+              </a>
+            </div>
+          </div>
+
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4">
             {[
@@ -167,7 +193,7 @@ export default function AdminDashboard() {
                       <tr key={s._id} className="hover:bg-white/3 transition-colors group">
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
-                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs flex-shrink-0 ${s.Gender === 'Girl' ? 'bg-pink-500/20 text-pink-300' : 'bg-blue-500/20 text-blue-300'}`}>
+                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 ${s.Gender === 'Girl' ? 'bg-pink-500/20 text-pink-300' : 'bg-blue-500/20 text-blue-300'}`}>
                               {s.StudentName?.charAt(0)?.toUpperCase()}
                             </div>
                             <div>
@@ -191,7 +217,7 @@ export default function AdminDashboard() {
                           {s.submittedDevice?.ip ? (
                             <div className="flex flex-col gap-0.5">
                               <div className="flex items-center gap-1.5 text-xs">
-                                <Monitor size={12} className="text-violet-400 flex-shrink-0" />
+                                <Monitor size={12} className="text-violet-400 shrink-0" />
                                 <span className="text-violet-400 font-mono">{s.submittedDevice.ip}</span>
                               </div>
                               {s.submittedDevice.deviceModel && s.submittedDevice.deviceModel !== 'Unknown' && (

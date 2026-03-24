@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Users, FilePlus, Search, TrendingUp, GraduationCap, MapPin, Calendar, Award, ArrowRight } from "lucide-react";
+import { Users, FilePlus, Search, TrendingUp, GraduationCap, MapPin, Calendar, Award, ArrowRight, Linkedin, Send } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Home() {
@@ -143,6 +143,32 @@ export default function Home() {
               </div>
             </div>
           </Link>
+        </div>
+      </div>
+
+      {/* Developer Details */}
+      <div className="glass-panel p-8 mb-8">
+        <p className="text-xs uppercase tracking-widest text-slate-500 font-bold">Developer Details</p>
+        <h3 className="text-2xl font-black text-slate-900 mt-2">Shanuka Lakshan</h3>
+        <p className="text-sm text-brand-700 font-semibold mt-1">DD Developer</p>
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a
+            href="https://www.linkedin.com/in/shanukadev/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors text-sm font-bold"
+          >
+            <Linkedin size={16} /> LinkedIn Profile
+          </a>
+          <a
+            href="https://t.me/shanuka2212"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-50 text-cyan-700 hover:bg-cyan-100 transition-colors text-sm font-bold"
+          >
+            <Send size={16} /> Telegram Profile
+          </a>
         </div>
       </div>
       
